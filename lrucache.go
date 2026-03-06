@@ -58,6 +58,18 @@ func (c *LRUCache) Put(key any, value any) any {
 	return newNode.value
 }
 
+func (c *LRUCache) Clear() {
+	for k := range c.cache {
+		delete(c.cache, k)
+	}
+	c.left.next = c.right
+	c.right.prev = c.left
+}
+
+func (c *LRUCache) Len() int32 {
+	return int32(len(c.cache))
+}
+
 func (c *LRUCache) Print() {
 	for k, v := range c.cache {
 		fmt.Printf("%v: %v\n", k, v.value)
